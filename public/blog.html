@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Học Lập Trình Online</title>
+     <link rel="stylesheet" href="/css/style.css">
+     <script src="/js/script.js"></script>
+</head>
+<body>
+        <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo" onclick="window.location.href='home.html'">LearnHub</div>
+            <ul class="nav-menu">
+                <li><a class="nav-link" href="home.html">Trang Chủ</a></li>
+                <li><a class="nav-link" href="courses.html">Khóa Học</a></li>
+                <li><a class="nav-link" href="categories.html">Danh Mục</a></li>
+                <li><a class="nav-link active" href="blog.html">Blog</a></li>
+                <li><a class="nav-link" href="about.html">Giới Thiệu</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <span class="btn btn-secondary" onclick="showLoginModal()">Đăng Nhập</span>
+            </div>
+            <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LearnHub</h3>
+                    <p>Nền tảng học lập trình trực tuyến hàng đầu Việt Nam. Chúng tôi cam kết mang đến những khóa học chất lượng cao với giá cả hợp lý.</p>
+                    <div style="margin-top: 1rem;">
+                        <span style="color: #667eea;">📧</span> contact@learnhub.vn<br>
+                        <span style="color: #667eea;">📞</span> 1900 1234<br>
+                        <span style="color: #667eea;">📍</span> TP. Hồ Chí Minh, Việt Nam
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Khóa Học</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="filterCourses('web')">Web Development</a></li>
+                        <li><a href="#" onclick="filterCourses('mobile')">Mobile App</a></li>
+                        <li><a href="#" onclick="filterCourses('ai')">AI & Machine Learning</a></li>
+                        <li><a href="#" onclick="filterCourses('design')">UI/UX Design</a></li>
+                        <li><a href="#" onclick="filterCourses('cloud')">Cloud Computing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ Trợ</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Trung tâm trợ giúp</a></li>
+                        <li><a href="#">Hướng dẫn thanh toán</a></li>
+                        <li><a href="#">Chính sách hoàn tiền</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Theo Dõi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnHub. Tất cả quyền được bảo lưu. | 
+                   <a href="#" style="color: #667eea;">Điều khoản dịch vụ</a> | 
+                   <a href="#" style="color: #667eea;">Chính sách bảo mật</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
