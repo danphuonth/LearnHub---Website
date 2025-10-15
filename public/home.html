@@ -141,6 +141,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn btn-primary btn-large" onclick="window.location.href='courses.html'">
+                        Xem Tất Cả Khóa Học
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -153,35 +159,132 @@
                 </div>
 
                 <div class="categories-grid">
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=web'">
                         <div class="category-icon">💻</div>
                         <div class="category-name">Web Development</div>
                         <div class="category-count">120+ khóa học</div>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=mobile'">
                         <div class="category-icon">📱</div>
                         <div class="category-name">Mobile App</div>
                         <div class="category-count">80+ khóa học</div>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=ai'">
                         <div class="category-icon">🤖</div>
                         <div class="category-name">AI & Machine Learning</div>
                         <div class="category-count">60+ khóa học</div>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=design'">
                         <div class="category-icon">🎨</div>
                         <div class="category-name">UI/UX Design</div>
                         <div class="category-count">90+ khóa học</div>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=cloud'">
                         <div class="category-icon">☁️</div>
                         <div class="category-name">Cloud Computing</div>
                         <div class="category-count">70+ khóa học</div>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="window.location.href='courses.html?category=security'">
                         <div class="category-icon">🔒</div>
                         <div class="category-name">Cybersecurity</div>
                         <div class="category-count">45+ khóa học</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn btn-secondary btn-large" onclick="window.location.href='categories.html'">
+                        Xem Tất Cả Danh Mục
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Học Viên Nói Gì Về Chúng Tôi</h2>
+                    <p class="section-subtitle">Những chia sẻ từ học viên đã học tại LearnHub</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Khóa học React.js thật sự tuyệt vời! Giảng viên giải thích rất dễ hiểu và bài tập thực hành rất hữu ích. Sau khóa học, tôi đã tự tin xin việc và được nhận vào công ty mơ ước."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">NT</div>
+                            <div>
+                                <div class="author-name">Nguyễn Văn Thành</div>
+                                <div class="author-title">Frontend Developer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Tôi chuyển từ ngành khác sang IT nhờ các khóa học tại LearnHub. Nội dung cập nhật, giảng viên nhiệt tình hỗ trợ. Đây là khoản đầu tư xứng đáng nhất cho sự nghiệp của tôi."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">LH</div>
+                            <div>
+                                <div class="author-name">Lê Thị Hương</div>
+                                <div class="author-title">Full-Stack Developer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text">"Khóa học Machine Learning giúp tôi nắm vững kiến thức từ cơ bản đến nâng cao. Giảng viên có kinh nghiệm thực tế và luôn chia sẻ những case study thực tế rất bổ ích."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">PD</div>
+                            <div>
+                                <div class="author-name">Phạm Minh Đức</div>
+                                <div class="author-title">AI Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE US -->
+        <section class="why-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Tại Sao Chọn LearnHub?</h2>
+                    <p class="section-subtitle">Những lý do khiến hàng nghìn học viên tin tưởng và lựa chọn</p>
+                </div>
+
+                <div class="why-grid">
+                    <div class="why-card">
+                        <div class="why-icon">🎓</div>
+                        <h3>Giảng Viên Chất Lượng</h3>
+                        <p>Đội ngũ giảng viên giàu kinh nghiệm, làm việc tại các công ty công nghệ hàng đầu</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">💼</div>
+                        <h3>Học Thực Chiến</h3>
+                        <p>Các dự án thực tế giúp bạn tự tin ứng tuyển và làm việc ngay sau khóa học</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">🎯</div>
+                        <h3>Lộ Trình Rõ Ràng</h3>
+                        <p>Chương trình học được thiết kế bài bản, từ cơ bản đến nâng cao một cách logic</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">💬</div>
+                        <h3>Hỗ Trợ 24/7</h3>
+                        <p>Cộng đồng học viên sôi động và đội ngũ support luôn sẵn sàng giúp đỡ</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">📜</div>
+                        <h3>Chứng Chỉ Uy Tín</h3>
+                        <p>Chứng chỉ hoàn thành khóa học được công nhận bởi các doanh nghiệp</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">💰</div>
+                        <h3>Giá Cả Hợp Lý</h3>
+                        <p>Nhiều khóa học miễn phí và các gói Premium với giá ưu đãi</p>
                     </div>
                 </div>
             </div>
@@ -199,10 +302,10 @@
                 <div class="footer-section">
                     <h3>Khóa Học</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Mobile App</a></li>
-                        <li><a href="#">AI & ML</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="courses.html?category=web">Web Development</a></li>
+                        <li><a href="courses.html?category=mobile">Mobile App</a></li>
+                        <li><a href="courses.html?category=ai">AI & ML</a></li>
+                        <li><a href="courses.html?category=design">UI/UX Design</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -219,7 +322,7 @@
                     <ul class="footer-links">
                         <li>📧 info@learnhub.vn</li>
                         <li>📞 1900-1234</li>
-                        <li>📍 Tp Hồ Chí Minh, Việt Nam</li>
+                        <li>📍 Tp Hồ Chí Minh, Việt Nam</li>
                     </ul>
                 </div>
             </div>
@@ -384,3 +487,4 @@
     </div>
 
 </body>
+</html>
