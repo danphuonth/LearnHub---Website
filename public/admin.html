@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LearnHub</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo" onclick="window.location.href='home.html'">
+                <span style="color: #dc3545;">⚙️</span> LearnHub Admin
+            </div>
+            <ul class="nav-menu">
+                <li><a class="nav-link" href="index.html">Về Trang Chủ</a></li>
+            </ul>
+            <div class="nav-actions" id="navActions">
+                <span class="btn btn-secondary" onclick="showLoginModal()">Đăng Nhập</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ADMIN DASHBOARD -->
+    <section class="admin-section">
+        <div class="admin-container">
+            <!-- SIDEBAR -->
+            <aside class="admin-sidebar">
+                <div class="admin-menu">
+                    <h3>📊 QUẢN TRỊ</h3>
+                    <a href="#" class="admin-menu-item active" onclick="showAdminTab('dashboard'); return false;">
+                        <span>📈</span> Tổng Quan
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('users'); return false;">
+                        <span>👥</span> Quản Lý Học Viên
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('courses'); return false;">
+                        <span>📚</span> Quản Lý Khóa Học
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('enrollments'); return false;">
+                        <span>📝</span> Đăng Ký Khóa Học
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('teachers'); return false;">
+                        <span>👨‍🏫</span> Quản Lý Giảng Viên
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('analytics'); return false;">
+                        <span>📊</span> Thống Kê
+                    </a>
+                    <a href="#" class="admin-menu-item" onclick="showAdminTab('settings'); return false;">
+                        <span>⚙️</span> Cài Đặt
+                    </a>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="admin-main">
+                <!-- DASHBOARD TAB -->
+                <div id="admin-tab-dashboard" class="admin-tab active">
+                    <div class="admin-header">
+                        <h1>Tổng Quan Hệ Thống</h1>
+                        <p>Chào mừng trở lại, <span id="adminName">Admin</span>!</p>
+                    </div>
+
+                    <!-- STATISTICS CARDS -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                👥
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalUsers">0</h3>
+                                <p>Tổng Học Viên</p>
+                                <span class="stat-change positive">+12% tháng này</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                📚
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCourses">0</h3>
+                                <p>Tổng Khóa Học</p>
+                                <span class="stat-change positive">+5 khóa mới</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                📝
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalEnrollments">0</h3>
+                                <p>Lượt Đăng Ký</p>
+                                <span class="stat-change positive">+25% tháng này</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                💰
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenue">0đ</h3>
+                                <p>Doanh Thu</p>
+                                <span class="stat-change positive">+18% tháng này</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECENT ACTIVITIES -->
+                    <div class="admin-card">
+                        <h3>Hoạt Động Gần Đây</h3>
+                        <div id="recentActivities" class="activities-list">
+                            <p class="loading-text">Đang tải...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- USERS TAB -->
+                <div id="admin-tab-users" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Quản Lý Học Viên</h1>
+                        <div class="header-actions">
+                            <input type="text" placeholder="Tìm kiếm học viên..." class="search-input" id="searchUsers" onkeyup="searchUsers()">
+                            <button class="btn btn-primary" onclick="exportUsers()">📥 Xuất Excel</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="table-header">
+                            <h3>Danh Sách Học Viên (<span id="usersCount">0</span>)</h3>
+                            <select class="filter-select" id="roleFilter" onchange="filterUsersByRole()">
+                                <option value="">Tất cả vai trò</option>
+                                <option value="student">Học viên</option>
+                                <option value="teacher">Giảng viên</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Avatar</th>
+                                        <th>Họ Tên</th>
+                                        <th>Email</th>
+                                        <th>Vai Trò</th>
+                                        <th>Số Khóa Học</th>
+                                        <th>Ngày Đăng Ký</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <tr>
+                                        <td colspan="8" class="loading-text">Đang tải dữ liệu...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-pagination">
+                            <button class="btn btn-secondary" onclick="prevUsersPage()">← Trước</button>
+                            <span>Trang <span id="currentUsersPage">1</span></span>
+                            <button class="btn btn-secondary" onclick="nextUsersPage()">Sau →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COURSES TAB -->
+                <div id="admin-tab-courses" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Quản Lý Khóa Học</h1>
+                        <div class="header-actions">
+                            <input type="text" placeholder="Tìm kiếm khóa học..." class="search-input" id="searchCourses">
+                            <button class="btn btn-primary" onclick="showAddCourseModal()">➕ Thêm Khóa Học</button>
+                        </div>
+                    </div>
+
+                    <div class="courses-grid-admin">
+                        <div id="coursesListAdmin">
+                            <p class="loading-text">Đang tải khóa học...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENROLLMENTS TAB -->
+                <div id="admin-tab-enrollments" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Quản Lý Đăng Ký Khóa Học</h1>
+                        <div class="header-actions">
+                            <input type="text" placeholder="Tìm kiếm..." class="search-input" id="searchEnrollments">
+                            <select class="filter-select" id="courseFilter" onchange="filterEnrollments()">
+                                <option value="">Tất cả khóa học</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="table-header">
+                            <h3>Danh Sách Đăng Ký (<span id="enrollmentsCount">0</span>)</h3>
+                            <button class="btn btn-secondary" onclick="exportEnrollments()">📥 Xuất Excel</button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Học Viên</th>
+                                        <th>Email</th>
+                                        <th>Khóa Học</th>
+                                        <th>Giá</th>
+                                        <th>Tiến Độ</th>
+                                        <th>Ngày Đăng Ký</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="enrollmentsTableBody">
+                                    <tr>
+                                        <td colspan="8" class="loading-text">Đang tải dữ liệu...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEACHERS TAB -->
+                <div id="admin-tab-teachers" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Quản Lý Giảng Viên</h1>
+                        <button class="btn btn-primary" onclick="showAddTeacherModal()">➕ Thêm Giảng Viên</button>
+                    </div>
+
+                    <div class="teachers-grid">
+                        <div id="teachersList">
+                            <p class="loading-text">Đang tải giảng viên...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS TAB -->
+                <div id="admin-tab-analytics" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Thống Kê & Báo Cáo</h1>
+                        <select class="filter-select">
+                            <option>7 ngày qua</option>
+                            <option>30 ngày qua</option>
+                            <option>3 tháng qua</option>
+                            <option>1 năm qua</option>
+                        </select>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="admin-card">
+                            <h3>Xu Hướng Đăng Ký</h3>
+                            <canvas id="enrollmentChart" width="400" height="200"></canvas>
+                        </div>
+
+                        <div class="admin-card">
+                            <h3>Khóa Học Phổ Biến</h3>
+                            <div id="popularCourses">
+                                <p class="loading-text">Đang tải...</p>
+                            </div>
+                        </div>
+
+                        <div class="admin-card">
+                            <h3>Doanh Thu Theo Tháng</h3>
+                            <canvas id="revenueChart" width="400" height="200"></canvas>
+                        </div>
+
+                        <div class="admin-card">
+                            <h3>Tỷ Lệ Hoàn Thành</h3>
+                            <div id="completionRates">
+                                <p class="loading-text">Đang tải...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS TAB -->
+                <div id="admin-tab-settings" class="admin-tab">
+                    <div class="admin-header">
+                        <h1>Cài Đặt Hệ Thống</h1>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Cài Đặt Chung</h3>
+                        <form id="systemSettingsForm">
+                            <div class="form-group">
+                                <label class="form-label">Tên Website</label>
+                                <input type="text" class="form-input" value="LearnHub">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Hỗ Trợ</label>
+                                <input type="email" class="form-input" value="info@learnhub.vn">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Số Điện Thoại</label>
+                                <input type="tel" class="form-input" value="1900-1234">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Phân Quyền</h3>
+                        <div class="permissions-list">
+                            <div class="permission-item">
+                                <strong>Quản lý học viên</strong>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="permission-item">
+                                <strong>Quản lý khóa học</strong>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="permission-item">
+                                <strong>Xem thống kê</strong>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- USER DETAIL MODAL -->
+    <div id="userDetailModal" class="modal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('userDetailModal')">&times;</button>
+            <h2 class="modal-title">Chi Tiết Học Viên</h2>
+            
+            <div class="user-detail-content">
+                <div class="user-detail-header">
+                    <img id="userDetailAvatar" src="" alt="Avatar" class="user-detail-avatar">
+                    <div>
+                        <h3 id="userDetailName"></h3>
+                        <p id="userDetailEmail"></p>
+                        <span id="userDetailRole" class="badge"></span>
+                    </div>
+                </div>
+
+                <div class="user-detail-tabs">
+                    <button class="tab-btn active" onclick="showUserDetailTab('info')">Thông Tin</button>
+                    <button class="tab-btn" onclick="showUserDetailTab('courses')">Khóa Học</button>
+                    <button class="tab-btn" onclick="showUserDetailTab('activity')">Hoạt Động</button>
+                </div>
+
+                <div id="userDetailTabContent">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-danger" onclick="banUser()">🚫 Khóa Tài Khoản</button>
+                    <button class="btn btn-secondary" onclick="changeUserRole()">🔄 Đổi Vai Trò</button>
+                    <button class="btn btn-primary" onclick="closeModal('userDetailModal')">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD COURSE MODAL -->
+    <div id="addCourseModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addCourseModal')">&times;</button>
+            <h2 class="modal-title">Thêm Khóa Học Mới</h2>
+            
+            <form id="addCourseForm" onsubmit="addCourse(event)">
+                <div class="form-group">
+                    <label class="form-label">Tên Khóa Học</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Danh Mục</label>
+                    <select class="form-input" required>
+                        <option value="">Chọn danh mục</option>
+                        <option value="web">Web Development</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="ai">AI & ML</option>
+                        <option value="design">UI/UX Design</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Giá (VNĐ)</label>
+                    <input type="number" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mô Tả</label>
+                    <textarea class="form-input" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Thêm Khóa Học</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Config -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
